@@ -4,4 +4,3 @@
 - Benjamim Miranda Costa (a87985)
 - Marisa Ferreira Soares (a92926)
 - Miguel Rodrigues Santa Cruz (a93194)
-- 
