@@ -1,0 +1,16 @@
+Template → Comandos
+
+Comandos → Comandos Comando
+	 | ε
+	 
+Comando → Declaração
+	| if Cond Ação
+	| for num
+	| foreach ID 'in' ID
+	
+Declaração → ID '=' num	
+	
+Cond → Exp < Exp
+
+Exp → num
+    → ID '.get(' num ')'    //o objetivo é fazer tp aluno.get(3) → devolve o terceiro campo de aluno
