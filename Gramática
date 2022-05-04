@@ -3,14 +3,18 @@ Template → Comandos
 Comandos → Comandos Comando
 	 | ε
 	 
-Comando → Declaração
-	| if Cond Ação
-	| for num
-	| foreach ID 'in' ID
+Comando → Declaracao
+	| if Cond Declaracao //exemplo: if alunos.get(5)>alunos.get(6) {alunos=5}
+	| for NUM Declaracao //exemplo: for 4 {alunos} -> printa 4 vezes os alunos
+	| foreach ID 'in' ID  //exemplo: foreach a in alunos ->printa todos alunos
 	
-Declaração → ID '=' num	
+Declaracao → '{' ID '=' NUM '}'	
 	
-Cond → Exp < Exp
+Cond → Exp '<' Exp
+	| Exp '>' Exp 
+	| Exp '<=' Exp 
+	| Exp '>=' Exp 
+	| Exp '==' Exp  
 
-Exp → num
-    → ID '.get(' num ')'    //o objetivo é fazer tp aluno.get(3) → devolve o terceiro campo de aluno
+Exp → NUM
+    | ID '.get(' NUM ')'    //o objetivo é fazer tp aluno.get(3) → devolve o terceiro campo de aluno
