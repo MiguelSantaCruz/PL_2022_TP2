@@ -1,0 +1,11 @@
+titulo: Trabalho prático 2
+
+subtitulo: Template
+
+Alunos: [ { nome: Benjamim,
+            nota: 17 },
+          { nome: Marisa,
+            nota: 15 },
+          { nome: Miguel,
+            nota: 19 } ]
+

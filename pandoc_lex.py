@@ -1,17 +1,21 @@
+from webbrowser import get
 import ply.lex as lex 
 import ply.yacc as yacc
 
 
 
-literals = ["{", "}", "<", ">"]
+literals = ["$", "(", ")" ]
 
 
 #ver isto que nao sei usar
-reserved = {"for": "for",
-            "foreach"
+reserved = {"for": "K_FOR",
+            "foreach" : "K_FOREACH",
+            "if": "K_IF"
             }
 
-tokens = ["ID", "NUM"] + list(reserved.values())
+tokens = ["ID", "NUM", "LESS","LESSEQUALS", "MORE","MOREEQUALS","EQUALS","NOTEQUALS", "GET", "IN"] + list(reserved.values())
+
+
 
 def t_NUM(t):
     r'\d+'
@@ -23,7 +27,16 @@ def t_ID(t):
     t.type = reserved.get(t.value, 'ID')
     return t
 
+t_LESS = "<"
+t_LESSEQUALS = "<="
+t_MORE = ">"
+t_MOREEQUALS = ">="
+t_EQUALS = "=="
+t_NOTEQUALS = "!="
+t_GET = ".get"
+t_IN = "in"
 t_ignore = " \t\n\r"
+
 
 def p_template(p):
     "template : comandos"

@@ -1,20 +1,31 @@
+
+T = {K_FOR,K_FOREACH,K_IF,K_THEN,Cond,ID,IN,'$','=',LESS,MORE,LESSEQUAL,MOREQUAL,EQUALS,GET,')','('}
+
+
+
 Template → Comandos
 
 Comandos → Comandos Comando
 	 | ε
 	 
 Comando → Declaracao
-	| if Cond Declaracao //exemplo: if alunos.get(5)>alunos.get(6) {alunos=5}
-	| for NUM Declaracao //exemplo: for 4 {alunos} -> printa 4 vezes os alunos
-	| foreach ID 'in' ID  //exemplo: foreach a in alunos ->printa todos alunos
+	| K_FOR Cond '{' Comandos '}'        //exemplo: for 4 {alunos} -> printa 4 vezes os alunos
+	| K_FOREACH ID IN ID '{'Comandos '}'           //exemplo: foreach a in alunos ->printa todos alunos
+    | K_IF '(' Cond ')' K_THEN '{' Comandos '}' K_ELSE '{' Comandos '}'
+	| K_IF '(' Cond ')' '{' Comandos '}'           //exemplo: if alunos.get(5)>alunos.get(6) {alunos=5}
 	
-Declaracao → '{' ID '=' NUM '}'	
 	
-Cond → Exp '<' Exp
-	| Exp '>' Exp 
-	| Exp '<=' Exp 
-	| Exp '>=' Exp 
-	| Exp '==' Exp  
+
+Declaracao → '$' ID '$'	
+			| '$' ID '=' Exp '$'
+
+	
+Cond → Exp LESS Exp
+	| Exp MORE Exp 
+	| Exp LESSEQUAL Exp 
+	| Exp MOREQUAL Exp 
+	| Exp EQUALS Exp  
 
 Exp → NUM
-    | ID '.get(' NUM ')'    //o objetivo é fazer tp aluno.get(3) → devolve o terceiro campo de aluno
+    | ID GET '(' NUM ')'    //o objetivo é fazer tp aluno.get(3) → devolve o terceiro campo de aluno
+
