@@ -1,0 +1,29 @@
+Template -> Comandos 
+
+Comandos -> Comandos Comando 
+         | ε
+
+Comando -> Declaracao 
+        | Ciclo
+        | Condicao
+        | Print
+        | ε
+    
+Declaracao -> '$' ID '$'
+            | NUM
+            | ε
+
+Ciclo -> FOR '(' Declaracao ')' '{' Comandos '}'
+       | FOREACH ID IN ID '{' Comandos '}' 
+
+Condicao -> IF '(' Cond ')' '{' Comandos '}'
+
+Cond -> Declaracao '>' Declaracao 
+      | Declaracao '<' Declaracao
+      | Declaracao GE Declaracao 
+      | Declaracao LE Declaracao
+      | Declaracao EQUALS Declaracao 
+      | Declaracao NOTEQUALS Declaracao
+
+Print -> PRINT '(' Declaracao ')'
+       | PRINT ID

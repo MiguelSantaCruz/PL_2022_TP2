@@ -5,6 +5,10 @@ $subtitulo$
 A lista de alunos 'e a seguinte: foreach a in Alunos { print a }.
 A lista das notas 'e foreach a in Alunos { print a.get(2) }.
 
+
+
+
+
 $ notaalta = foreach a in Alunos { print >a.get(2) } $
 
 A nota mais alta 'e $notaalta$.
