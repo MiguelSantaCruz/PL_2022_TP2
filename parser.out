@@ -1,0 +1,699 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> template
+Rule 1     template -> comandos
+Rule 2     comandos -> comandos comando
+Rule 3     comandos -> <empty>
+Rule 4     comando -> declaracao
+Rule 5     declaracao -> $ ID $
+Rule 6     declaracao -> NUM
+Rule 7     comando -> ciclo
+Rule 8     ciclo -> K_FOR ( declaracao ) { comandos }
+Rule 9     ciclo -> K_FOREACH ID IN ID { comandos }
+Rule 10    comando -> condicao
+Rule 11    condicao -> K_IF ( cond ) { comandos }
+Rule 12    cond -> declaracao > declaracao
+Rule 13    cond -> declaracao < declaracao
+Rule 14    cond -> declaracao GE declaracao
+Rule 15    cond -> declaracao LE declaracao
+Rule 16    cond -> declaracao EQUALS declaracao
+Rule 17    cond -> declaracao NOTEQUALS declaracao
+Rule 18    comando -> print
+Rule 19    print -> K_PRINT ( declaracao )
+Rule 20    print -> K_PRINT ID
+
+Terminals, with rules where they appear
+
+$                    : 5 5
+(                    : 8 11 19
+)                    : 8 11 19
+<                    : 13
+>                    : 12
+EQUALS               : 16
+GE                   : 14
+ID                   : 5 9 9 20
+IN                   : 9
+K_FOR                : 8
+K_FOREACH            : 9
+K_IF                 : 11
+K_PRINT              : 19 20
+LE                   : 15
+NOTEQUALS            : 17
+NUM                  : 6
+error                : 
+{                    : 8 9 11
+}                    : 8 9 11
+
+Nonterminals, with rules where they appear
+
+ciclo                : 7
+comando              : 2
+comandos             : 1 2 8 9 11
+cond                 : 11
+condicao             : 10
+declaracao           : 4 8 12 12 13 13 14 14 15 15 16 16 17 17 19
+print                : 18
+template             : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . template
+    (1) template -> . comandos
+    (2) comandos -> . comandos comando
+    (3) comandos -> .
+
+    $               reduce using rule 3 (comandos -> .)
+    NUM             reduce using rule 3 (comandos -> .)
+    K_FOR           reduce using rule 3 (comandos -> .)
+    K_FOREACH       reduce using rule 3 (comandos -> .)
+    K_IF            reduce using rule 3 (comandos -> .)
+    K_PRINT         reduce using rule 3 (comandos -> .)
+    $end            reduce using rule 3 (comandos -> .)
+
+    template                       shift and go to state 1
+    comandos                       shift and go to state 2
+
+state 1
+
+    (0) S' -> template .
+
+
+
+state 2
+
+    (1) template -> comandos .
+    (2) comandos -> comandos . comando
+    (4) comando -> . declaracao
+    (7) comando -> . ciclo
+    (10) comando -> . condicao
+    (18) comando -> . print
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+    (8) ciclo -> . K_FOR ( declaracao ) { comandos }
+    (9) ciclo -> . K_FOREACH ID IN ID { comandos }
+    (11) condicao -> . K_IF ( cond ) { comandos }
+    (19) print -> . K_PRINT ( declaracao )
+    (20) print -> . K_PRINT ID
+
+    $end            reduce using rule 1 (template -> comandos .)
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+    K_FOR           shift and go to state 10
+    K_FOREACH       shift and go to state 11
+    K_IF            shift and go to state 12
+    K_PRINT         shift and go to state 13
+
+    comando                        shift and go to state 3
+    declaracao                     shift and go to state 4
+    ciclo                          shift and go to state 5
+    condicao                       shift and go to state 6
+    print                          shift and go to state 7
+
+state 3
+
+    (2) comandos -> comandos comando .
+
+    $               reduce using rule 2 (comandos -> comandos comando .)
+    NUM             reduce using rule 2 (comandos -> comandos comando .)
+    K_FOR           reduce using rule 2 (comandos -> comandos comando .)
+    K_FOREACH       reduce using rule 2 (comandos -> comandos comando .)
+    K_IF            reduce using rule 2 (comandos -> comandos comando .)
+    K_PRINT         reduce using rule 2 (comandos -> comandos comando .)
+    $end            reduce using rule 2 (comandos -> comandos comando .)
+    }               reduce using rule 2 (comandos -> comandos comando .)
+
+
+state 4
+
+    (4) comando -> declaracao .
+
+    $               reduce using rule 4 (comando -> declaracao .)
+    NUM             reduce using rule 4 (comando -> declaracao .)
+    K_FOR           reduce using rule 4 (comando -> declaracao .)
+    K_FOREACH       reduce using rule 4 (comando -> declaracao .)
+    K_IF            reduce using rule 4 (comando -> declaracao .)
+    K_PRINT         reduce using rule 4 (comando -> declaracao .)
+    $end            reduce using rule 4 (comando -> declaracao .)
+    }               reduce using rule 4 (comando -> declaracao .)
+
+
+state 5
+
+    (7) comando -> ciclo .
+
+    $               reduce using rule 7 (comando -> ciclo .)
+    NUM             reduce using rule 7 (comando -> ciclo .)
+    K_FOR           reduce using rule 7 (comando -> ciclo .)
+    K_FOREACH       reduce using rule 7 (comando -> ciclo .)
+    K_IF            reduce using rule 7 (comando -> ciclo .)
+    K_PRINT         reduce using rule 7 (comando -> ciclo .)
+    $end            reduce using rule 7 (comando -> ciclo .)
+    }               reduce using rule 7 (comando -> ciclo .)
+
+
+state 6
+
+    (10) comando -> condicao .
+
+    $               reduce using rule 10 (comando -> condicao .)
+    NUM             reduce using rule 10 (comando -> condicao .)
+    K_FOR           reduce using rule 10 (comando -> condicao .)
+    K_FOREACH       reduce using rule 10 (comando -> condicao .)
+    K_IF            reduce using rule 10 (comando -> condicao .)
+    K_PRINT         reduce using rule 10 (comando -> condicao .)
+    $end            reduce using rule 10 (comando -> condicao .)
+    }               reduce using rule 10 (comando -> condicao .)
+
+
+state 7
+
+    (18) comando -> print .
+
+    $               reduce using rule 18 (comando -> print .)
+    NUM             reduce using rule 18 (comando -> print .)
+    K_FOR           reduce using rule 18 (comando -> print .)
+    K_FOREACH       reduce using rule 18 (comando -> print .)
+    K_IF            reduce using rule 18 (comando -> print .)
+    K_PRINT         reduce using rule 18 (comando -> print .)
+    $end            reduce using rule 18 (comando -> print .)
+    }               reduce using rule 18 (comando -> print .)
+
+
+state 8
+
+    (5) declaracao -> $ . ID $
+
+    ID              shift and go to state 14
+
+
+state 9
+
+    (6) declaracao -> NUM .
+
+    $               reduce using rule 6 (declaracao -> NUM .)
+    NUM             reduce using rule 6 (declaracao -> NUM .)
+    K_FOR           reduce using rule 6 (declaracao -> NUM .)
+    K_FOREACH       reduce using rule 6 (declaracao -> NUM .)
+    K_IF            reduce using rule 6 (declaracao -> NUM .)
+    K_PRINT         reduce using rule 6 (declaracao -> NUM .)
+    $end            reduce using rule 6 (declaracao -> NUM .)
+    )               reduce using rule 6 (declaracao -> NUM .)
+    >               reduce using rule 6 (declaracao -> NUM .)
+    <               reduce using rule 6 (declaracao -> NUM .)
+    GE              reduce using rule 6 (declaracao -> NUM .)
+    LE              reduce using rule 6 (declaracao -> NUM .)
+    EQUALS          reduce using rule 6 (declaracao -> NUM .)
+    NOTEQUALS       reduce using rule 6 (declaracao -> NUM .)
+    }               reduce using rule 6 (declaracao -> NUM .)
+
+
+state 10
+
+    (8) ciclo -> K_FOR . ( declaracao ) { comandos }
+
+    (               shift and go to state 15
+
+
+state 11
+
+    (9) ciclo -> K_FOREACH . ID IN ID { comandos }
+
+    ID              shift and go to state 16
+
+
+state 12
+
+    (11) condicao -> K_IF . ( cond ) { comandos }
+
+    (               shift and go to state 17
+
+
+state 13
+
+    (19) print -> K_PRINT . ( declaracao )
+    (20) print -> K_PRINT . ID
+
+    (               shift and go to state 18
+    ID              shift and go to state 19
+
+
+state 14
+
+    (5) declaracao -> $ ID . $
+
+    $               shift and go to state 20
+
+
+state 15
+
+    (8) ciclo -> K_FOR ( . declaracao ) { comandos }
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+
+    declaracao                     shift and go to state 21
+
+state 16
+
+    (9) ciclo -> K_FOREACH ID . IN ID { comandos }
+
+    IN              shift and go to state 22
+
+
+state 17
+
+    (11) condicao -> K_IF ( . cond ) { comandos }
+    (12) cond -> . declaracao > declaracao
+    (13) cond -> . declaracao < declaracao
+    (14) cond -> . declaracao GE declaracao
+    (15) cond -> . declaracao LE declaracao
+    (16) cond -> . declaracao EQUALS declaracao
+    (17) cond -> . declaracao NOTEQUALS declaracao
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+
+    cond                           shift and go to state 23
+    declaracao                     shift and go to state 24
+
+state 18
+
+    (19) print -> K_PRINT ( . declaracao )
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+
+    declaracao                     shift and go to state 25
+
+state 19
+
+    (20) print -> K_PRINT ID .
+
+    $               reduce using rule 20 (print -> K_PRINT ID .)
+    NUM             reduce using rule 20 (print -> K_PRINT ID .)
+    K_FOR           reduce using rule 20 (print -> K_PRINT ID .)
+    K_FOREACH       reduce using rule 20 (print -> K_PRINT ID .)
+    K_IF            reduce using rule 20 (print -> K_PRINT ID .)
+    K_PRINT         reduce using rule 20 (print -> K_PRINT ID .)
+    $end            reduce using rule 20 (print -> K_PRINT ID .)
+    }               reduce using rule 20 (print -> K_PRINT ID .)
+
+
+state 20
+
+    (5) declaracao -> $ ID $ .
+
+    $               reduce using rule 5 (declaracao -> $ ID $ .)
+    NUM             reduce using rule 5 (declaracao -> $ ID $ .)
+    K_FOR           reduce using rule 5 (declaracao -> $ ID $ .)
+    K_FOREACH       reduce using rule 5 (declaracao -> $ ID $ .)
+    K_IF            reduce using rule 5 (declaracao -> $ ID $ .)
+    K_PRINT         reduce using rule 5 (declaracao -> $ ID $ .)
+    $end            reduce using rule 5 (declaracao -> $ ID $ .)
+    )               reduce using rule 5 (declaracao -> $ ID $ .)
+    >               reduce using rule 5 (declaracao -> $ ID $ .)
+    <               reduce using rule 5 (declaracao -> $ ID $ .)
+    GE              reduce using rule 5 (declaracao -> $ ID $ .)
+    LE              reduce using rule 5 (declaracao -> $ ID $ .)
+    EQUALS          reduce using rule 5 (declaracao -> $ ID $ .)
+    NOTEQUALS       reduce using rule 5 (declaracao -> $ ID $ .)
+    }               reduce using rule 5 (declaracao -> $ ID $ .)
+
+
+state 21
+
+    (8) ciclo -> K_FOR ( declaracao . ) { comandos }
+
+    )               shift and go to state 26
+
+
+state 22
+
+    (9) ciclo -> K_FOREACH ID IN . ID { comandos }
+
+    ID              shift and go to state 27
+
+
+state 23
+
+    (11) condicao -> K_IF ( cond . ) { comandos }
+
+    )               shift and go to state 28
+
+
+state 24
+
+    (12) cond -> declaracao . > declaracao
+    (13) cond -> declaracao . < declaracao
+    (14) cond -> declaracao . GE declaracao
+    (15) cond -> declaracao . LE declaracao
+    (16) cond -> declaracao . EQUALS declaracao
+    (17) cond -> declaracao . NOTEQUALS declaracao
+
+    >               shift and go to state 29
+    <               shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    EQUALS          shift and go to state 33
+    NOTEQUALS       shift and go to state 34
+
+
+state 25
+
+    (19) print -> K_PRINT ( declaracao . )
+
+    )               shift and go to state 35
+
+
+state 26
+
+    (8) ciclo -> K_FOR ( declaracao ) . { comandos }
+
+    {               shift and go to state 36
+
+
+state 27
+
+    (9) ciclo -> K_FOREACH ID IN ID . { comandos }
+
+    {               shift and go to state 37
+
+
+state 28
+
+    (11) condicao -> K_IF ( cond ) . { comandos }
+
+    {               shift and go to state 38
+
+
+state 29
+
+    (12) cond -> declaracao > . declaracao
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+
+    declaracao                     shift and go to state 39
+
+state 30
+
+    (13) cond -> declaracao < . declaracao
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+
+    declaracao                     shift and go to state 40
+
+state 31
+
+    (14) cond -> declaracao GE . declaracao
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+
+    declaracao                     shift and go to state 41
+
+state 32
+
+    (15) cond -> declaracao LE . declaracao
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+
+    declaracao                     shift and go to state 42
+
+state 33
+
+    (16) cond -> declaracao EQUALS . declaracao
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+
+    declaracao                     shift and go to state 43
+
+state 34
+
+    (17) cond -> declaracao NOTEQUALS . declaracao
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+
+    declaracao                     shift and go to state 44
+
+state 35
+
+    (19) print -> K_PRINT ( declaracao ) .
+
+    $               reduce using rule 19 (print -> K_PRINT ( declaracao ) .)
+    NUM             reduce using rule 19 (print -> K_PRINT ( declaracao ) .)
+    K_FOR           reduce using rule 19 (print -> K_PRINT ( declaracao ) .)
+    K_FOREACH       reduce using rule 19 (print -> K_PRINT ( declaracao ) .)
+    K_IF            reduce using rule 19 (print -> K_PRINT ( declaracao ) .)
+    K_PRINT         reduce using rule 19 (print -> K_PRINT ( declaracao ) .)
+    $end            reduce using rule 19 (print -> K_PRINT ( declaracao ) .)
+    }               reduce using rule 19 (print -> K_PRINT ( declaracao ) .)
+
+
+state 36
+
+    (8) ciclo -> K_FOR ( declaracao ) { . comandos }
+    (2) comandos -> . comandos comando
+    (3) comandos -> .
+
+    }               reduce using rule 3 (comandos -> .)
+    $               reduce using rule 3 (comandos -> .)
+    NUM             reduce using rule 3 (comandos -> .)
+    K_FOR           reduce using rule 3 (comandos -> .)
+    K_FOREACH       reduce using rule 3 (comandos -> .)
+    K_IF            reduce using rule 3 (comandos -> .)
+    K_PRINT         reduce using rule 3 (comandos -> .)
+
+    comandos                       shift and go to state 45
+
+state 37
+
+    (9) ciclo -> K_FOREACH ID IN ID { . comandos }
+    (2) comandos -> . comandos comando
+    (3) comandos -> .
+
+    }               reduce using rule 3 (comandos -> .)
+    $               reduce using rule 3 (comandos -> .)
+    NUM             reduce using rule 3 (comandos -> .)
+    K_FOR           reduce using rule 3 (comandos -> .)
+    K_FOREACH       reduce using rule 3 (comandos -> .)
+    K_IF            reduce using rule 3 (comandos -> .)
+    K_PRINT         reduce using rule 3 (comandos -> .)
+
+    comandos                       shift and go to state 46
+
+state 38
+
+    (11) condicao -> K_IF ( cond ) { . comandos }
+    (2) comandos -> . comandos comando
+    (3) comandos -> .
+
+    }               reduce using rule 3 (comandos -> .)
+    $               reduce using rule 3 (comandos -> .)
+    NUM             reduce using rule 3 (comandos -> .)
+    K_FOR           reduce using rule 3 (comandos -> .)
+    K_FOREACH       reduce using rule 3 (comandos -> .)
+    K_IF            reduce using rule 3 (comandos -> .)
+    K_PRINT         reduce using rule 3 (comandos -> .)
+
+    comandos                       shift and go to state 47
+
+state 39
+
+    (12) cond -> declaracao > declaracao .
+
+    )               reduce using rule 12 (cond -> declaracao > declaracao .)
+
+
+state 40
+
+    (13) cond -> declaracao < declaracao .
+
+    )               reduce using rule 13 (cond -> declaracao < declaracao .)
+
+
+state 41
+
+    (14) cond -> declaracao GE declaracao .
+
+    )               reduce using rule 14 (cond -> declaracao GE declaracao .)
+
+
+state 42
+
+    (15) cond -> declaracao LE declaracao .
+
+    )               reduce using rule 15 (cond -> declaracao LE declaracao .)
+
+
+state 43
+
+    (16) cond -> declaracao EQUALS declaracao .
+
+    )               reduce using rule 16 (cond -> declaracao EQUALS declaracao .)
+
+
+state 44
+
+    (17) cond -> declaracao NOTEQUALS declaracao .
+
+    )               reduce using rule 17 (cond -> declaracao NOTEQUALS declaracao .)
+
+
+state 45
+
+    (8) ciclo -> K_FOR ( declaracao ) { comandos . }
+    (2) comandos -> comandos . comando
+    (4) comando -> . declaracao
+    (7) comando -> . ciclo
+    (10) comando -> . condicao
+    (18) comando -> . print
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+    (8) ciclo -> . K_FOR ( declaracao ) { comandos }
+    (9) ciclo -> . K_FOREACH ID IN ID { comandos }
+    (11) condicao -> . K_IF ( cond ) { comandos }
+    (19) print -> . K_PRINT ( declaracao )
+    (20) print -> . K_PRINT ID
+
+    }               shift and go to state 48
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+    K_FOR           shift and go to state 10
+    K_FOREACH       shift and go to state 11
+    K_IF            shift and go to state 12
+    K_PRINT         shift and go to state 13
+
+    declaracao                     shift and go to state 4
+    comando                        shift and go to state 3
+    ciclo                          shift and go to state 5
+    condicao                       shift and go to state 6
+    print                          shift and go to state 7
+
+state 46
+
+    (9) ciclo -> K_FOREACH ID IN ID { comandos . }
+    (2) comandos -> comandos . comando
+    (4) comando -> . declaracao
+    (7) comando -> . ciclo
+    (10) comando -> . condicao
+    (18) comando -> . print
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+    (8) ciclo -> . K_FOR ( declaracao ) { comandos }
+    (9) ciclo -> . K_FOREACH ID IN ID { comandos }
+    (11) condicao -> . K_IF ( cond ) { comandos }
+    (19) print -> . K_PRINT ( declaracao )
+    (20) print -> . K_PRINT ID
+
+    }               shift and go to state 49
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+    K_FOR           shift and go to state 10
+    K_FOREACH       shift and go to state 11
+    K_IF            shift and go to state 12
+    K_PRINT         shift and go to state 13
+
+    comando                        shift and go to state 3
+    declaracao                     shift and go to state 4
+    ciclo                          shift and go to state 5
+    condicao                       shift and go to state 6
+    print                          shift and go to state 7
+
+state 47
+
+    (11) condicao -> K_IF ( cond ) { comandos . }
+    (2) comandos -> comandos . comando
+    (4) comando -> . declaracao
+    (7) comando -> . ciclo
+    (10) comando -> . condicao
+    (18) comando -> . print
+    (5) declaracao -> . $ ID $
+    (6) declaracao -> . NUM
+    (8) ciclo -> . K_FOR ( declaracao ) { comandos }
+    (9) ciclo -> . K_FOREACH ID IN ID { comandos }
+    (11) condicao -> . K_IF ( cond ) { comandos }
+    (19) print -> . K_PRINT ( declaracao )
+    (20) print -> . K_PRINT ID
+
+    }               shift and go to state 50
+    $               shift and go to state 8
+    NUM             shift and go to state 9
+    K_FOR           shift and go to state 10
+    K_FOREACH       shift and go to state 11
+    K_IF            shift and go to state 12
+    K_PRINT         shift and go to state 13
+
+    comando                        shift and go to state 3
+    declaracao                     shift and go to state 4
+    ciclo                          shift and go to state 5
+    condicao                       shift and go to state 6
+    print                          shift and go to state 7
+
+state 48
+
+    (8) ciclo -> K_FOR ( declaracao ) { comandos } .
+
+    $               reduce using rule 8 (ciclo -> K_FOR ( declaracao ) { comandos } .)
+    NUM             reduce using rule 8 (ciclo -> K_FOR ( declaracao ) { comandos } .)
+    K_FOR           reduce using rule 8 (ciclo -> K_FOR ( declaracao ) { comandos } .)
+    K_FOREACH       reduce using rule 8 (ciclo -> K_FOR ( declaracao ) { comandos } .)
+    K_IF            reduce using rule 8 (ciclo -> K_FOR ( declaracao ) { comandos } .)
+    K_PRINT         reduce using rule 8 (ciclo -> K_FOR ( declaracao ) { comandos } .)
+    $end            reduce using rule 8 (ciclo -> K_FOR ( declaracao ) { comandos } .)
+    }               reduce using rule 8 (ciclo -> K_FOR ( declaracao ) { comandos } .)
+
+
+state 49
+
+    (9) ciclo -> K_FOREACH ID IN ID { comandos } .
+
+    $               reduce using rule 9 (ciclo -> K_FOREACH ID IN ID { comandos } .)
+    NUM             reduce using rule 9 (ciclo -> K_FOREACH ID IN ID { comandos } .)
+    K_FOR           reduce using rule 9 (ciclo -> K_FOREACH ID IN ID { comandos } .)
+    K_FOREACH       reduce using rule 9 (ciclo -> K_FOREACH ID IN ID { comandos } .)
+    K_IF            reduce using rule 9 (ciclo -> K_FOREACH ID IN ID { comandos } .)
+    K_PRINT         reduce using rule 9 (ciclo -> K_FOREACH ID IN ID { comandos } .)
+    $end            reduce using rule 9 (ciclo -> K_FOREACH ID IN ID { comandos } .)
+    }               reduce using rule 9 (ciclo -> K_FOREACH ID IN ID { comandos } .)
+
+
+state 50
+
+    (11) condicao -> K_IF ( cond ) { comandos } .
+
+    $               reduce using rule 11 (condicao -> K_IF ( cond ) { comandos } .)
+    NUM             reduce using rule 11 (condicao -> K_IF ( cond ) { comandos } .)
+    K_FOR           reduce using rule 11 (condicao -> K_IF ( cond ) { comandos } .)
+    K_FOREACH       reduce using rule 11 (condicao -> K_IF ( cond ) { comandos } .)
+    K_IF            reduce using rule 11 (condicao -> K_IF ( cond ) { comandos } .)
+    K_PRINT         reduce using rule 11 (condicao -> K_IF ( cond ) { comandos } .)
+    $end            reduce using rule 11 (condicao -> K_IF ( cond ) { comandos } .)
+    }               reduce using rule 11 (condicao -> K_IF ( cond ) { comandos } .)
+
