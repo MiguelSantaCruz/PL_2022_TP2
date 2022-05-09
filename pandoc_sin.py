@@ -90,3 +90,4 @@ def p_print_declaracao(p):
 
 def p_print_id(p):
     "print : K_PRINT ID"
+    print(p[2])
