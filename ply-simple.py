@@ -18,7 +18,7 @@ t_ANY_LEX = r'%%\s*LEX'
 t_ANY_LITERALS = r'%literals'
 t_ANY_IGNORE = r'%ignore'
 t_ANY_TOKENS = r'%tokens'
-t_YACC = r'%%\s* YACC'
+t_YACC = r'%%\s*YACC'
 t_PRECEDENT = r'%precedence'
 
 def t_STARTOFCODE(t):
@@ -57,7 +57,7 @@ def t_expreg_CODE(t):
     return t
 
 def t_PRODUCAO(t):
-    r'\w+\s*:\s*[^\{]*'
+    r'\w+\s*:\s+[^\{]*'
     lexer.push_state('codeproductions')
     return t
 
@@ -95,25 +95,80 @@ def t_ANY_error(t):
 
 # ---- Parser -----------------------------------------------------------
 
+def p_Ply(p):
+    "Ply : Lex Yacc Codigo"
+
+def p_Lex(p):
+    "Lex : LEX Listas Expregulares"
+
+def p_Listas_list(p):
+    "Listas : Listas Lista"
+
+def p_Listas_empty(p):
+    "Listas : "
+
+def p_Lista_tokens(p):
+    "Lista : TOKENS '=' STRING"
+
+def p_Lista_literals(p):
+    "Lista : LITERALS '=' STRING"
+
+def p_Lista_ignore(p):
+    "Lista : IGNORE '=' STRING"
+
+def p_Lista_precedent(p):
+    "Lista : PRECEDENT '=' STRING"
+
+def p_Expregulares_list(p):
+    "Expregulares : Expregulares Expregular"
+
+def p_Expregulares_empty(p):
+    "Expregulares : "
+
+def p_Expregular_exp(p):
+    "Expregular : EXPREG CODE"
+
+def p_Yacc_list(p):
+    "Yacc : YACC Listas Producoes"
+
+def p_Producoes_notempty(p):
+    "Producoes : Producoes Producao"
+
+def p_Producoes_empty(p):
+    "Producoes :  "
+
+def p_Producao_(p):
+    "Producao : PRODUCAO CODE"
+
+def p_Codigo_notempty(p):
+    "Codigo : STARTOFCODE ListaComandos ENDCODE"
+
+def p_Codigo_empty(p):
+    "Codigo : "
+
+def p_ListaComandos_notempty(p):
+    "ListaComandos : ListaComandos CODE"
+
+def p_ListaComandos_empty(p):
+    "ListaComandos : "
+
+def p_error(p):
+    print("Syntax Error: ",p)
+    parser.success = False
 
 
+parser = yacc.yacc()
 
-
-
-# Build the parser
-#parser = yacc.yacc()
 lexer = lex.lex()
 # Read line from input and parse it
 import sys
-#parser.success = True
+parser.success = True
 
-for linha in sys.stdin:
-        lexer.input (linha)
-        for tok in lexer:
-            print(tok)
-    #parser.parse(linha)
-    #if parser.success:
-    #    print("Programa estruturalmente correto!")
-    #else:
-    #    print("Programa com erros... Corrija e tente novamente!")
+
+program = sys.stdin.read()
+parser.parse(program)
+if parser.success:
+    print("Programa estruturalmente correto!")
+else:
+    print("Programa com erros... Corrija e tente novamente!")
 

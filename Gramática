@@ -1,5 +1,4 @@
 Ply → Lex Yacc Codigo
-    | ε
     
 Lex → LEX Listas ExpRegulares
     
@@ -10,14 +9,14 @@ Lista → TOKENS = STRING
        | LITERALS = STRING
        | IGNORE = STRING
        | PRECEDENT = STRING
+       | ε
 
 ExpRegulares → ExpRegulares ExpRegular
              | ε
 
 ExpRegular → EXPREG CODE
 
-Yacc → YAC Listas Producoes
-     | ε
+Yacc → YACC Listas Producoes
 
 Producoes → Producoes Producao
           | ε
@@ -26,6 +25,7 @@ Producao → PRODUCAO CODE
 
 
 Codigo → STARTOFCODE ListaComandos ENDOFCODE
+        | ε
 
 ListaComandos → ListaComandos CODE
               | ε 
