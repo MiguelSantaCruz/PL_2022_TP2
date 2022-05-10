@@ -18,8 +18,8 @@ r'.'                           error(f"Illegal character ’{t.value[0]}’, [{t
 ]
 
 
-# symboltable : dictionary of variables
-ts = { }
+## symboltable : dictionary of variables
+## ts = { }
 
 stat : VAR ’=’ exp { ts[t[1]] = t[3] }
 stat : exp { print(t[1]) }

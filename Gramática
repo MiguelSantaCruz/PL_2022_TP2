@@ -1,0 +1,31 @@
+Ply → Lex Yacc Codigo
+    | ε
+    
+Lex → LEX Listas ExpRegulares
+    
+Listas → Listas Lista
+       | ε
+      
+Lista → TOKENS = STRING
+       | LITERALS = STRING
+       | IGNORE = STRING
+       | PRECEDENT = STRING
+
+ExpRegulares → ExpRegulares ExpRegular
+             | ε
+
+ExpRegular → EXPREG CODE
+
+Yacc → YAC Listas Producoes
+     | ε
+
+Producoes → Producoes Producao
+          | ε
+
+Producao → PRODUCAO CODE  
+
+
+Codigo → STARTOFCODE ListaComandos ENDOFCODE
+
+ListaComandos → ListaComandos CODE
+              | ε 

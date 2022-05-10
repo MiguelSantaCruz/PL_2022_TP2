@@ -3,9 +3,7 @@ import ply.yacc as yacc
 
 literals = ['=',',']
 
-tokens = ['LEX','STRING','OPENLIST','CLOSELIST','LITERALS','IGNORE','TOKENS','EXPREG','CODE','YACC','PRECEDENT','COMMENT','PRODUCOES','STARTOFCODE','TEXT','ENDCODE']
-
-# falta SYMBOLTABLE
+tokens = ['LEX','STRING','OPENLIST','CLOSELIST','LITERALS','IGNORE','TOKENS','EXPREG','CODE','YACC','PRECEDENT','COMMENT','PRODUCAO','STARTOFCODE','TEXT','ENDCODE']
 
 states = [('initial','inclusive'),
           ('list','exclusive'),
@@ -26,6 +24,7 @@ t_PRECEDENT = r'%precedence'
 def t_STARTOFCODE(t):
     r'\$\$'
     lexer.push_state('code')
+    return t
 
 def t_OPENLIST(t):
     r'\['
@@ -50,16 +49,19 @@ def t_comment_END(t):
 def t_EXPREG(t):
     r'r\'.*\''
     lexer.push_state('expreg')
+    return t
 
-def t_expreg_CODEEND(t):
+def t_expreg_CODE(t):
     r'[^\n]+'
     lexer.pop_state()
+    return t
 
-def t_producoes(t):
+def t_PRODUCAO(t):
     r'\w+\s*:\s*[^\{]*'
     lexer.push_state('codeproductions')
+    return t
 
-def t_codeproductions_STRING(t):
+def t_codeproductions_CODE(t):
     r'[^\}]+'
     return t
 
@@ -76,7 +78,7 @@ def t_function_STRING(t):
     lexer.pop_state()
     return t
 
-def t_code_TEXT(t):
+def t_code_CODE(t):
     r'(.)+\n'
     return t
 
@@ -90,6 +92,13 @@ t_ANY_ignore = " \t\n\r"
 def t_ANY_error(t):
     print("Illegal character " + t.value[0])
     lexer.skip(1)
+
+# ---- Parser -----------------------------------------------------------
+
+
+
+
+
 
 # Build the parser
 #parser = yacc.yacc()
@@ -107,3 +116,4 @@ for linha in sys.stdin:
     #    print("Programa estruturalmente correto!")
     #else:
     #    print("Programa com erros... Corrija e tente novamente!")
+
