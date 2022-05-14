@@ -28,7 +28,8 @@ Rule 15    Producao -> PRODUCAO CODE
 Rule 16    Codigo -> STARTOFCODE ListaComandos ENDCODE
 Rule 17    Codigo -> <empty>
 Rule 18    ListaComandos -> ListaComandos CODE
-Rule 19    ListaComandos -> <empty>
+Rule 19    ListaComandos -> ListaComandos INDEPENDENTCODE
+Rule 20    ListaComandos -> <empty>
 
 Terminals, with rules where they appear
 
@@ -39,6 +40,7 @@ COMMENT              :
 ENDCODE              : 16
 EXPREG               : 11
 IGNORE               : 7
+INDEPENDENTCODE      : 19
 LEX                  : 2
 LITERALS             : 6
 OPENLIST             : 
@@ -58,7 +60,7 @@ Expregular           : 9
 Expregulares         : 2 9
 Lex                  : 1
 Lista                : 3
-ListaComandos        : 16 18
+ListaComandos        : 16 18 19
 Listas               : 2 3 12
 Ply                  : 0
 Producao             : 13
@@ -167,10 +169,12 @@ state 8
 
     (16) Codigo -> STARTOFCODE . ListaComandos ENDCODE
     (18) ListaComandos -> . ListaComandos CODE
-    (19) ListaComandos -> .
+    (19) ListaComandos -> . ListaComandos INDEPENDENTCODE
+    (20) ListaComandos -> .
 
-    ENDCODE         reduce using rule 19 (ListaComandos -> .)
-    CODE            reduce using rule 19 (ListaComandos -> .)
+    ENDCODE         reduce using rule 20 (ListaComandos -> .)
+    CODE            reduce using rule 20 (ListaComandos -> .)
+    INDEPENDENTCODE reduce using rule 20 (ListaComandos -> .)
 
     ListaComandos                  shift and go to state 16
 
@@ -254,9 +258,11 @@ state 16
 
     (16) Codigo -> STARTOFCODE ListaComandos . ENDCODE
     (18) ListaComandos -> ListaComandos . CODE
+    (19) ListaComandos -> ListaComandos . INDEPENDENTCODE
 
     ENDCODE         shift and go to state 24
     CODE            shift and go to state 25
+    INDEPENDENTCODE shift and go to state 26
 
 
 state 17
@@ -267,9 +273,9 @@ state 17
 
     STARTOFCODE     reduce using rule 12 (Yacc -> YACC Listas Producoes .)
     $end            reduce using rule 12 (Yacc -> YACC Listas Producoes .)
-    PRODUCAO        shift and go to state 27
+    PRODUCAO        shift and go to state 28
 
-    Producao                       shift and go to state 26
+    Producao                       shift and go to state 27
 
 state 18
 
@@ -283,35 +289,35 @@ state 19
 
     (11) Expregular -> EXPREG . CODE
 
-    CODE            shift and go to state 28
+    CODE            shift and go to state 29
 
 
 state 20
 
     (5) Lista -> TOKENS = . STRING
 
-    STRING          shift and go to state 29
+    STRING          shift and go to state 30
 
 
 state 21
 
     (6) Lista -> LITERALS = . STRING
 
-    STRING          shift and go to state 30
+    STRING          shift and go to state 31
 
 
 state 22
 
     (7) Lista -> IGNORE = . STRING
 
-    STRING          shift and go to state 31
+    STRING          shift and go to state 32
 
 
 state 23
 
     (8) Lista -> PRECEDENT = . STRING
 
-    STRING          shift and go to state 32
+    STRING          shift and go to state 33
 
 
 state 24
@@ -327,9 +333,19 @@ state 25
 
     ENDCODE         reduce using rule 18 (ListaComandos -> ListaComandos CODE .)
     CODE            reduce using rule 18 (ListaComandos -> ListaComandos CODE .)
+    INDEPENDENTCODE reduce using rule 18 (ListaComandos -> ListaComandos CODE .)
 
 
 state 26
+
+    (19) ListaComandos -> ListaComandos INDEPENDENTCODE .
+
+    ENDCODE         reduce using rule 19 (ListaComandos -> ListaComandos INDEPENDENTCODE .)
+    CODE            reduce using rule 19 (ListaComandos -> ListaComandos INDEPENDENTCODE .)
+    INDEPENDENTCODE reduce using rule 19 (ListaComandos -> ListaComandos INDEPENDENTCODE .)
+
+
+state 27
 
     (13) Producoes -> Producoes Producao .
 
@@ -338,14 +354,14 @@ state 26
     $end            reduce using rule 13 (Producoes -> Producoes Producao .)
 
 
-state 27
+state 28
 
     (15) Producao -> PRODUCAO . CODE
 
-    CODE            shift and go to state 33
+    CODE            shift and go to state 34
 
 
-state 28
+state 29
 
     (11) Expregular -> EXPREG CODE .
 
@@ -353,7 +369,7 @@ state 28
     YACC            reduce using rule 11 (Expregular -> EXPREG CODE .)
 
 
-state 29
+state 30
 
     (5) Lista -> TOKENS = STRING .
 
@@ -368,7 +384,7 @@ state 29
     $end            reduce using rule 5 (Lista -> TOKENS = STRING .)
 
 
-state 30
+state 31
 
     (6) Lista -> LITERALS = STRING .
 
@@ -383,7 +399,7 @@ state 30
     $end            reduce using rule 6 (Lista -> LITERALS = STRING .)
 
 
-state 31
+state 32
 
     (7) Lista -> IGNORE = STRING .
 
@@ -398,7 +414,7 @@ state 31
     $end            reduce using rule 7 (Lista -> IGNORE = STRING .)
 
 
-state 32
+state 33
 
     (8) Lista -> PRECEDENT = STRING .
 
@@ -413,7 +429,7 @@ state 32
     $end            reduce using rule 8 (Lista -> PRECEDENT = STRING .)
 
 
-state 33
+state 34
 
     (15) Producao -> PRODUCAO CODE .
 

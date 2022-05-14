@@ -28,4 +28,5 @@ Codigo → STARTOFCODE ListaComandos ENDOFCODE
         | ε
 
 ListaComandos → ListaComandos CODE
-              | ε 
+              |  ListaComandos INDEPENDENTCODE
+              |  ε 

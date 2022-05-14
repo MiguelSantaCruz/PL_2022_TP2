@@ -7,7 +7,7 @@
 ## a expressão regular tem de ser r'expreg'
 
 r'[a-zA-Z_][a-zA-Z0-9_]*'      return('VAR', t.value)
-r'\d+(\.\d+)?'                 return('NUMBER', float(t.value)
+r'\d+(\.\d+)?'                 return('NUMBER', float(t.value))
 r'.'                           error(f"Illegal character '{t.value[0]}', [{t.lexer.lineno}]",t.lexer.skip(1) )
 
 %% YACC
