@@ -4,8 +4,6 @@ Unused terminals:
 
     CLOSELIST
     COMMENT
-    OPENLIST
-    TEXT
 
 Grammar
 
@@ -18,53 +16,55 @@ Rule 5     Lista -> TOKENS = STRING
 Rule 6     Lista -> LITERALS = STRING
 Rule 7     Lista -> IGNORE = STRING
 Rule 8     Lista -> PRECEDENT = STRING
-Rule 9     Expregulares -> Expregulares Expregular
-Rule 10    Expregulares -> <empty>
-Rule 11    Expregular -> EXPREG CODE
-Rule 12    Yacc -> YACC Listas Producoes
-Rule 13    Producoes -> Producoes Producao
-Rule 14    Producoes -> <empty>
-Rule 15    Producao -> PRODUCAO CODE
-Rule 16    Codigo -> STARTOFCODE ListaComandos ENDCODE
-Rule 17    Codigo -> <empty>
-Rule 18    ListaComandos -> ListaComandos CODE
-Rule 19    ListaComandos -> ListaComandos INDEPENDENTCODE
-Rule 20    ListaComandos -> <empty>
+Rule 9     Lista -> DIC = STRING CLOSEDIC
+Rule 10    Lista -> DIC = CLOSEDIC
+Rule 11    Expregulares -> Expregulares Expregular
+Rule 12    Expregulares -> <empty>
+Rule 13    Expregular -> EXPREG CODE
+Rule 14    Yacc -> YACC Listas Producoes
+Rule 15    Producoes -> Producoes Producao
+Rule 16    Producoes -> <empty>
+Rule 17    Producao -> PRODUCAO CODE
+Rule 18    Codigo -> STARTOFCODE ListaComandos ENDCODE
+Rule 19    Codigo -> <empty>
+Rule 20    ListaComandos -> ListaComandos CODE
+Rule 21    ListaComandos -> ListaComandos INDEPENDENTCODE
+Rule 22    ListaComandos -> <empty>
 
 Terminals, with rules where they appear
 
-=                    : 5 6 7 8
+=                    : 5 6 7 8 9 10
+CLOSEDIC             : 9 10
 CLOSELIST            : 
-CODE                 : 11 15 18
+CODE                 : 13 17 20
 COMMENT              : 
-ENDCODE              : 16
-EXPREG               : 11
+DIC                  : 9 10
+ENDCODE              : 18
+EXPREG               : 13
 IGNORE               : 7
-INDEPENDENTCODE      : 19
+INDEPENDENTCODE      : 21
 LEX                  : 2
 LITERALS             : 6
-OPENLIST             : 
 PRECEDENT            : 8
-PRODUCAO             : 15
-STARTOFCODE          : 16
-STRING               : 5 6 7 8
-TEXT                 : 
+PRODUCAO             : 17
+STARTOFCODE          : 18
+STRING               : 5 6 7 8 9
 TOKENS               : 5
-YACC                 : 12
+YACC                 : 14
 error                : 
 
 Nonterminals, with rules where they appear
 
 Codigo               : 1
-Expregular           : 9
-Expregulares         : 2 9
+Expregular           : 11
+Expregulares         : 2 11
 Lex                  : 1
 Lista                : 3
-ListaComandos        : 16 18 19
-Listas               : 2 3 12
+ListaComandos        : 18 20 21
+Listas               : 2 3 14
 Ply                  : 0
-Producao             : 13
-Producoes            : 12 13
+Producao             : 15
+Producoes            : 14 15
 Yacc                 : 1
 
 Parsing method: LALR
@@ -89,7 +89,7 @@ state 1
 state 2
 
     (1) Ply -> Lex . Yacc Codigo
-    (12) Yacc -> . YACC Listas Producoes
+    (14) Yacc -> . YACC Listas Producoes
 
     YACC            shift and go to state 5
 
@@ -105,6 +105,7 @@ state 3
     LITERALS        reduce using rule 4 (Listas -> .)
     IGNORE          reduce using rule 4 (Listas -> .)
     PRECEDENT       reduce using rule 4 (Listas -> .)
+    DIC             reduce using rule 4 (Listas -> .)
     EXPREG          reduce using rule 4 (Listas -> .)
     YACC            reduce using rule 4 (Listas -> .)
 
@@ -113,17 +114,17 @@ state 3
 state 4
 
     (1) Ply -> Lex Yacc . Codigo
-    (16) Codigo -> . STARTOFCODE ListaComandos ENDCODE
-    (17) Codigo -> .
+    (18) Codigo -> . STARTOFCODE ListaComandos ENDCODE
+    (19) Codigo -> .
 
     STARTOFCODE     shift and go to state 8
-    $end            reduce using rule 17 (Codigo -> .)
+    $end            reduce using rule 19 (Codigo -> .)
 
     Codigo                         shift and go to state 7
 
 state 5
 
-    (12) Yacc -> YACC . Listas Producoes
+    (14) Yacc -> YACC . Listas Producoes
     (3) Listas -> . Listas Lista
     (4) Listas -> .
 
@@ -131,6 +132,7 @@ state 5
     LITERALS        reduce using rule 4 (Listas -> .)
     IGNORE          reduce using rule 4 (Listas -> .)
     PRECEDENT       reduce using rule 4 (Listas -> .)
+    DIC             reduce using rule 4 (Listas -> .)
     PRODUCAO        reduce using rule 4 (Listas -> .)
     STARTOFCODE     reduce using rule 4 (Listas -> .)
     $end            reduce using rule 4 (Listas -> .)
@@ -141,19 +143,22 @@ state 6
 
     (2) Lex -> LEX Listas . Expregulares
     (3) Listas -> Listas . Lista
-    (9) Expregulares -> . Expregulares Expregular
-    (10) Expregulares -> .
+    (11) Expregulares -> . Expregulares Expregular
+    (12) Expregulares -> .
     (5) Lista -> . TOKENS = STRING
     (6) Lista -> . LITERALS = STRING
     (7) Lista -> . IGNORE = STRING
     (8) Lista -> . PRECEDENT = STRING
+    (9) Lista -> . DIC = STRING CLOSEDIC
+    (10) Lista -> . DIC = CLOSEDIC
 
-    EXPREG          reduce using rule 10 (Expregulares -> .)
-    YACC            reduce using rule 10 (Expregulares -> .)
+    EXPREG          reduce using rule 12 (Expregulares -> .)
+    YACC            reduce using rule 12 (Expregulares -> .)
     TOKENS          shift and go to state 12
     LITERALS        shift and go to state 13
     IGNORE          shift and go to state 14
     PRECEDENT       shift and go to state 15
+    DIC             shift and go to state 16
 
     Expregulares                   shift and go to state 10
     Lista                          shift and go to state 11
@@ -167,49 +172,52 @@ state 7
 
 state 8
 
-    (16) Codigo -> STARTOFCODE . ListaComandos ENDCODE
-    (18) ListaComandos -> . ListaComandos CODE
-    (19) ListaComandos -> . ListaComandos INDEPENDENTCODE
-    (20) ListaComandos -> .
+    (18) Codigo -> STARTOFCODE . ListaComandos ENDCODE
+    (20) ListaComandos -> . ListaComandos CODE
+    (21) ListaComandos -> . ListaComandos INDEPENDENTCODE
+    (22) ListaComandos -> .
 
-    ENDCODE         reduce using rule 20 (ListaComandos -> .)
-    CODE            reduce using rule 20 (ListaComandos -> .)
-    INDEPENDENTCODE reduce using rule 20 (ListaComandos -> .)
+    ENDCODE         reduce using rule 22 (ListaComandos -> .)
+    CODE            reduce using rule 22 (ListaComandos -> .)
+    INDEPENDENTCODE reduce using rule 22 (ListaComandos -> .)
 
-    ListaComandos                  shift and go to state 16
+    ListaComandos                  shift and go to state 17
 
 state 9
 
-    (12) Yacc -> YACC Listas . Producoes
+    (14) Yacc -> YACC Listas . Producoes
     (3) Listas -> Listas . Lista
-    (13) Producoes -> . Producoes Producao
-    (14) Producoes -> .
+    (15) Producoes -> . Producoes Producao
+    (16) Producoes -> .
     (5) Lista -> . TOKENS = STRING
     (6) Lista -> . LITERALS = STRING
     (7) Lista -> . IGNORE = STRING
     (8) Lista -> . PRECEDENT = STRING
+    (9) Lista -> . DIC = STRING CLOSEDIC
+    (10) Lista -> . DIC = CLOSEDIC
 
-    PRODUCAO        reduce using rule 14 (Producoes -> .)
-    STARTOFCODE     reduce using rule 14 (Producoes -> .)
-    $end            reduce using rule 14 (Producoes -> .)
+    PRODUCAO        reduce using rule 16 (Producoes -> .)
+    STARTOFCODE     reduce using rule 16 (Producoes -> .)
+    $end            reduce using rule 16 (Producoes -> .)
     TOKENS          shift and go to state 12
     LITERALS        shift and go to state 13
     IGNORE          shift and go to state 14
     PRECEDENT       shift and go to state 15
+    DIC             shift and go to state 16
 
-    Producoes                      shift and go to state 17
+    Producoes                      shift and go to state 18
     Lista                          shift and go to state 11
 
 state 10
 
     (2) Lex -> LEX Listas Expregulares .
-    (9) Expregulares -> Expregulares . Expregular
-    (11) Expregular -> . EXPREG CODE
+    (11) Expregulares -> Expregulares . Expregular
+    (13) Expregular -> . EXPREG CODE
 
     YACC            reduce using rule 2 (Lex -> LEX Listas Expregulares .)
-    EXPREG          shift and go to state 19
+    EXPREG          shift and go to state 20
 
-    Expregular                     shift and go to state 18
+    Expregular                     shift and go to state 19
 
 state 11
 
@@ -219,6 +227,7 @@ state 11
     LITERALS        reduce using rule 3 (Listas -> Listas Lista .)
     IGNORE          reduce using rule 3 (Listas -> Listas Lista .)
     PRECEDENT       reduce using rule 3 (Listas -> Listas Lista .)
+    DIC             reduce using rule 3 (Listas -> Listas Lista .)
     EXPREG          reduce using rule 3 (Listas -> Listas Lista .)
     YACC            reduce using rule 3 (Listas -> Listas Lista .)
     PRODUCAO        reduce using rule 3 (Listas -> Listas Lista .)
@@ -230,146 +239,163 @@ state 12
 
     (5) Lista -> TOKENS . = STRING
 
-    =               shift and go to state 20
+    =               shift and go to state 21
 
 
 state 13
 
     (6) Lista -> LITERALS . = STRING
 
-    =               shift and go to state 21
+    =               shift and go to state 22
 
 
 state 14
 
     (7) Lista -> IGNORE . = STRING
 
-    =               shift and go to state 22
+    =               shift and go to state 23
 
 
 state 15
 
     (8) Lista -> PRECEDENT . = STRING
 
-    =               shift and go to state 23
+    =               shift and go to state 24
 
 
 state 16
 
-    (16) Codigo -> STARTOFCODE ListaComandos . ENDCODE
-    (18) ListaComandos -> ListaComandos . CODE
-    (19) ListaComandos -> ListaComandos . INDEPENDENTCODE
+    (9) Lista -> DIC . = STRING CLOSEDIC
+    (10) Lista -> DIC . = CLOSEDIC
 
-    ENDCODE         shift and go to state 24
-    CODE            shift and go to state 25
-    INDEPENDENTCODE shift and go to state 26
+    =               shift and go to state 25
 
 
 state 17
 
-    (12) Yacc -> YACC Listas Producoes .
-    (13) Producoes -> Producoes . Producao
-    (15) Producao -> . PRODUCAO CODE
+    (18) Codigo -> STARTOFCODE ListaComandos . ENDCODE
+    (20) ListaComandos -> ListaComandos . CODE
+    (21) ListaComandos -> ListaComandos . INDEPENDENTCODE
 
-    STARTOFCODE     reduce using rule 12 (Yacc -> YACC Listas Producoes .)
-    $end            reduce using rule 12 (Yacc -> YACC Listas Producoes .)
-    PRODUCAO        shift and go to state 28
+    ENDCODE         shift and go to state 26
+    CODE            shift and go to state 27
+    INDEPENDENTCODE shift and go to state 28
 
-    Producao                       shift and go to state 27
 
 state 18
 
-    (9) Expregulares -> Expregulares Expregular .
+    (14) Yacc -> YACC Listas Producoes .
+    (15) Producoes -> Producoes . Producao
+    (17) Producao -> . PRODUCAO CODE
 
-    EXPREG          reduce using rule 9 (Expregulares -> Expregulares Expregular .)
-    YACC            reduce using rule 9 (Expregulares -> Expregulares Expregular .)
+    STARTOFCODE     reduce using rule 14 (Yacc -> YACC Listas Producoes .)
+    $end            reduce using rule 14 (Yacc -> YACC Listas Producoes .)
+    PRODUCAO        shift and go to state 30
 
+    Producao                       shift and go to state 29
 
 state 19
 
-    (11) Expregular -> EXPREG . CODE
+    (11) Expregulares -> Expregulares Expregular .
 
-    CODE            shift and go to state 29
+    EXPREG          reduce using rule 11 (Expregulares -> Expregulares Expregular .)
+    YACC            reduce using rule 11 (Expregulares -> Expregulares Expregular .)
 
 
 state 20
 
-    (5) Lista -> TOKENS = . STRING
+    (13) Expregular -> EXPREG . CODE
 
-    STRING          shift and go to state 30
+    CODE            shift and go to state 31
 
 
 state 21
 
-    (6) Lista -> LITERALS = . STRING
-
-    STRING          shift and go to state 31
-
-
-state 22
-
-    (7) Lista -> IGNORE = . STRING
+    (5) Lista -> TOKENS = . STRING
 
     STRING          shift and go to state 32
 
 
-state 23
+state 22
 
-    (8) Lista -> PRECEDENT = . STRING
+    (6) Lista -> LITERALS = . STRING
 
     STRING          shift and go to state 33
 
 
+state 23
+
+    (7) Lista -> IGNORE = . STRING
+
+    STRING          shift and go to state 34
+
+
 state 24
 
-    (16) Codigo -> STARTOFCODE ListaComandos ENDCODE .
+    (8) Lista -> PRECEDENT = . STRING
 
-    $end            reduce using rule 16 (Codigo -> STARTOFCODE ListaComandos ENDCODE .)
+    STRING          shift and go to state 35
 
 
 state 25
 
-    (18) ListaComandos -> ListaComandos CODE .
+    (9) Lista -> DIC = . STRING CLOSEDIC
+    (10) Lista -> DIC = . CLOSEDIC
 
-    ENDCODE         reduce using rule 18 (ListaComandos -> ListaComandos CODE .)
-    CODE            reduce using rule 18 (ListaComandos -> ListaComandos CODE .)
-    INDEPENDENTCODE reduce using rule 18 (ListaComandos -> ListaComandos CODE .)
+    STRING          shift and go to state 36
+    CLOSEDIC        shift and go to state 37
 
 
 state 26
 
-    (19) ListaComandos -> ListaComandos INDEPENDENTCODE .
+    (18) Codigo -> STARTOFCODE ListaComandos ENDCODE .
 
-    ENDCODE         reduce using rule 19 (ListaComandos -> ListaComandos INDEPENDENTCODE .)
-    CODE            reduce using rule 19 (ListaComandos -> ListaComandos INDEPENDENTCODE .)
-    INDEPENDENTCODE reduce using rule 19 (ListaComandos -> ListaComandos INDEPENDENTCODE .)
+    $end            reduce using rule 18 (Codigo -> STARTOFCODE ListaComandos ENDCODE .)
 
 
 state 27
 
-    (13) Producoes -> Producoes Producao .
+    (20) ListaComandos -> ListaComandos CODE .
 
-    PRODUCAO        reduce using rule 13 (Producoes -> Producoes Producao .)
-    STARTOFCODE     reduce using rule 13 (Producoes -> Producoes Producao .)
-    $end            reduce using rule 13 (Producoes -> Producoes Producao .)
+    ENDCODE         reduce using rule 20 (ListaComandos -> ListaComandos CODE .)
+    CODE            reduce using rule 20 (ListaComandos -> ListaComandos CODE .)
+    INDEPENDENTCODE reduce using rule 20 (ListaComandos -> ListaComandos CODE .)
 
 
 state 28
 
-    (15) Producao -> PRODUCAO . CODE
+    (21) ListaComandos -> ListaComandos INDEPENDENTCODE .
 
-    CODE            shift and go to state 34
+    ENDCODE         reduce using rule 21 (ListaComandos -> ListaComandos INDEPENDENTCODE .)
+    CODE            reduce using rule 21 (ListaComandos -> ListaComandos INDEPENDENTCODE .)
+    INDEPENDENTCODE reduce using rule 21 (ListaComandos -> ListaComandos INDEPENDENTCODE .)
 
 
 state 29
 
-    (11) Expregular -> EXPREG CODE .
+    (15) Producoes -> Producoes Producao .
 
-    EXPREG          reduce using rule 11 (Expregular -> EXPREG CODE .)
-    YACC            reduce using rule 11 (Expregular -> EXPREG CODE .)
+    PRODUCAO        reduce using rule 15 (Producoes -> Producoes Producao .)
+    STARTOFCODE     reduce using rule 15 (Producoes -> Producoes Producao .)
+    $end            reduce using rule 15 (Producoes -> Producoes Producao .)
 
 
 state 30
+
+    (17) Producao -> PRODUCAO . CODE
+
+    CODE            shift and go to state 38
+
+
+state 31
+
+    (13) Expregular -> EXPREG CODE .
+
+    EXPREG          reduce using rule 13 (Expregular -> EXPREG CODE .)
+    YACC            reduce using rule 13 (Expregular -> EXPREG CODE .)
+
+
+state 32
 
     (5) Lista -> TOKENS = STRING .
 
@@ -377,6 +403,7 @@ state 30
     LITERALS        reduce using rule 5 (Lista -> TOKENS = STRING .)
     IGNORE          reduce using rule 5 (Lista -> TOKENS = STRING .)
     PRECEDENT       reduce using rule 5 (Lista -> TOKENS = STRING .)
+    DIC             reduce using rule 5 (Lista -> TOKENS = STRING .)
     EXPREG          reduce using rule 5 (Lista -> TOKENS = STRING .)
     YACC            reduce using rule 5 (Lista -> TOKENS = STRING .)
     PRODUCAO        reduce using rule 5 (Lista -> TOKENS = STRING .)
@@ -384,7 +411,7 @@ state 30
     $end            reduce using rule 5 (Lista -> TOKENS = STRING .)
 
 
-state 31
+state 33
 
     (6) Lista -> LITERALS = STRING .
 
@@ -392,6 +419,7 @@ state 31
     LITERALS        reduce using rule 6 (Lista -> LITERALS = STRING .)
     IGNORE          reduce using rule 6 (Lista -> LITERALS = STRING .)
     PRECEDENT       reduce using rule 6 (Lista -> LITERALS = STRING .)
+    DIC             reduce using rule 6 (Lista -> LITERALS = STRING .)
     EXPREG          reduce using rule 6 (Lista -> LITERALS = STRING .)
     YACC            reduce using rule 6 (Lista -> LITERALS = STRING .)
     PRODUCAO        reduce using rule 6 (Lista -> LITERALS = STRING .)
@@ -399,7 +427,7 @@ state 31
     $end            reduce using rule 6 (Lista -> LITERALS = STRING .)
 
 
-state 32
+state 34
 
     (7) Lista -> IGNORE = STRING .
 
@@ -407,6 +435,7 @@ state 32
     LITERALS        reduce using rule 7 (Lista -> IGNORE = STRING .)
     IGNORE          reduce using rule 7 (Lista -> IGNORE = STRING .)
     PRECEDENT       reduce using rule 7 (Lista -> IGNORE = STRING .)
+    DIC             reduce using rule 7 (Lista -> IGNORE = STRING .)
     EXPREG          reduce using rule 7 (Lista -> IGNORE = STRING .)
     YACC            reduce using rule 7 (Lista -> IGNORE = STRING .)
     PRODUCAO        reduce using rule 7 (Lista -> IGNORE = STRING .)
@@ -414,7 +443,7 @@ state 32
     $end            reduce using rule 7 (Lista -> IGNORE = STRING .)
 
 
-state 33
+state 35
 
     (8) Lista -> PRECEDENT = STRING .
 
@@ -422,6 +451,7 @@ state 33
     LITERALS        reduce using rule 8 (Lista -> PRECEDENT = STRING .)
     IGNORE          reduce using rule 8 (Lista -> PRECEDENT = STRING .)
     PRECEDENT       reduce using rule 8 (Lista -> PRECEDENT = STRING .)
+    DIC             reduce using rule 8 (Lista -> PRECEDENT = STRING .)
     EXPREG          reduce using rule 8 (Lista -> PRECEDENT = STRING .)
     YACC            reduce using rule 8 (Lista -> PRECEDENT = STRING .)
     PRODUCAO        reduce using rule 8 (Lista -> PRECEDENT = STRING .)
@@ -429,11 +459,50 @@ state 33
     $end            reduce using rule 8 (Lista -> PRECEDENT = STRING .)
 
 
-state 34
+state 36
 
-    (15) Producao -> PRODUCAO CODE .
+    (9) Lista -> DIC = STRING . CLOSEDIC
 
-    PRODUCAO        reduce using rule 15 (Producao -> PRODUCAO CODE .)
-    STARTOFCODE     reduce using rule 15 (Producao -> PRODUCAO CODE .)
-    $end            reduce using rule 15 (Producao -> PRODUCAO CODE .)
+    CLOSEDIC        shift and go to state 39
+
+
+state 37
+
+    (10) Lista -> DIC = CLOSEDIC .
+
+    TOKENS          reduce using rule 10 (Lista -> DIC = CLOSEDIC .)
+    LITERALS        reduce using rule 10 (Lista -> DIC = CLOSEDIC .)
+    IGNORE          reduce using rule 10 (Lista -> DIC = CLOSEDIC .)
+    PRECEDENT       reduce using rule 10 (Lista -> DIC = CLOSEDIC .)
+    DIC             reduce using rule 10 (Lista -> DIC = CLOSEDIC .)
+    EXPREG          reduce using rule 10 (Lista -> DIC = CLOSEDIC .)
+    YACC            reduce using rule 10 (Lista -> DIC = CLOSEDIC .)
+    PRODUCAO        reduce using rule 10 (Lista -> DIC = CLOSEDIC .)
+    STARTOFCODE     reduce using rule 10 (Lista -> DIC = CLOSEDIC .)
+    $end            reduce using rule 10 (Lista -> DIC = CLOSEDIC .)
+
+
+state 38
+
+    (17) Producao -> PRODUCAO CODE .
+
+    PRODUCAO        reduce using rule 17 (Producao -> PRODUCAO CODE .)
+    STARTOFCODE     reduce using rule 17 (Producao -> PRODUCAO CODE .)
+    $end            reduce using rule 17 (Producao -> PRODUCAO CODE .)
+
+
+state 39
+
+    (9) Lista -> DIC = STRING CLOSEDIC .
+
+    TOKENS          reduce using rule 9 (Lista -> DIC = STRING CLOSEDIC .)
+    LITERALS        reduce using rule 9 (Lista -> DIC = STRING CLOSEDIC .)
+    IGNORE          reduce using rule 9 (Lista -> DIC = STRING CLOSEDIC .)
+    PRECEDENT       reduce using rule 9 (Lista -> DIC = STRING CLOSEDIC .)
+    DIC             reduce using rule 9 (Lista -> DIC = STRING CLOSEDIC .)
+    EXPREG          reduce using rule 9 (Lista -> DIC = STRING CLOSEDIC .)
+    YACC            reduce using rule 9 (Lista -> DIC = STRING CLOSEDIC .)
+    PRODUCAO        reduce using rule 9 (Lista -> DIC = STRING CLOSEDIC .)
+    STARTOFCODE     reduce using rule 9 (Lista -> DIC = STRING CLOSEDIC .)
+    $end            reduce using rule 9 (Lista -> DIC = STRING CLOSEDIC .)
 

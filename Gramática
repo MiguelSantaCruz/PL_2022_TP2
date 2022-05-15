@@ -5,10 +5,11 @@ Lex → LEX Listas ExpRegulares
 Listas → Listas Lista
        | ε
       
-Lista → TOKENS = STRING
-       | LITERALS = STRING
-       | IGNORE = STRING
-       | PRECEDENT = STRING
+Lista → TOKENS '=' STRING
+       | LITERALS '=' STRING
+       | IGNORE '=' STRING
+       | PRECEDENT '=' STRING                
+       | DIC '=' STRING                      
        | ε
 
 ExpRegulares → ExpRegulares ExpRegular

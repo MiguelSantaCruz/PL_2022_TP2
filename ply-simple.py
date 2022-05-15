@@ -6,15 +6,27 @@ pcount = 0
 
 literals = ['=',',']
 
-tokens = ['LEX','STRING','OPENLIST','CLOSELIST','LITERALS','IGNORE','TOKENS','EXPREG','CODE','YACC','PRECEDENT','COMMENT','PRODUCAO','STARTOFCODE','TEXT','ENDCODE','INDEPENDENTCODE']
+tokens = ['LEX','STRING','CLOSELIST','LITERALS','IGNORE','TOKENS','EXPREG','CODE','YACC','PRECEDENT','COMMENT',
+'PRODUCAO','STARTOFCODE','ENDCODE','INDEPENDENTCODE','CLOSEDIC','DIC']
 
 states = [('initial','inclusive'),
           ('list','exclusive'),
+          ('dictionary','exclusive'),
           ('comment','exclusive'),
           ('expreg','exclusive'),
           ('code','exclusive'),
           ('function','exclusive'),
           ('codeproductions','exclusive')]
+
+t_list_ignore = " \n\t\r"
+t_dictionary_ignore = " \n\t\r"
+t_comment_ignore = " \n\t\r"
+t_expreg_ignore = " \n\t\r"
+t_code_ignore = "\n"
+t_codeproductions_ignore = " \n\t\r"
+t_function_ignore = " \n\t\r"
+t_ignore = " \n\t\r"
+    
 
 t_ANY_STRING = r'\".*\"'
 t_ANY_LEX = r'%%\s*LEX'
@@ -23,13 +35,16 @@ t_ANY_IGNORE = r'%ignore'
 t_ANY_TOKENS = r'%tokens'
 t_YACC = r'%%\s*YACC'
 t_PRECEDENT = r'%precedence'
+t_DIC = r'\&[a-zA-Z_]+'
 
 def t_STARTOFCODE(t):
     r'\$\$'
     lexer.push_state('code')
     return t
 
-def t_OPENLIST(t):
+
+
+def t_openlist(t):
     r'\['
     lexer.push_state('list')
 
@@ -40,6 +55,19 @@ def t_list_STRING(t):
 def t_list_CLOSE(t):
     r'\]'
     lexer.pop_state()
+
+def t_dicionario(t):
+    r'\{'
+    lexer.push_state('dictionary')
+
+def t_dictionary_STRING(t):
+    r'[^\}]+'
+    return t
+
+def t_dictionary_CLOSEDIC(t):
+    r'\}'
+    lexer.pop_state()
+    return t
 
 def t_COMMENT(t):
     r'\#\#'
@@ -94,108 +122,124 @@ def t_code_ENDCODE(t):
     lexer.pop_state()
     return t
 
-
-t_ANY_ignore = " \t\n\r"
-
 def t_ANY_error(t):
-    print("Illegal character " + t.value[0])
+    print("Illegal character: " + t.value[0] + str(t.lexer.lineno))
     lexer.skip(1)
 
 # ---- Parser -----------------------------------------------------------
 
 def p_Ply(p):
     "Ply : Lex Yacc Codigo"
+    p[0] = str(p[1]) + str(p[2]) + str(p[3])
+    print(p[0])
 
 def p_Lex(p):
     "Lex : LEX Listas Expregulares"
-    print("import ply.lex as lex")
+    p[0] = "import ply.lex as lex\n\n" + str(p[2]) + str(p[3])
 
 def p_Listas_list(p):
     "Listas : Listas Lista"
+    p[0] = str(p[1]) + str(p[2])
 
 def p_Listas_empty(p):
     "Listas : "
+    p[0] = ""
 
 def p_Lista_tokens(p):
     "Lista : TOKENS '=' STRING"
-    print("tokens = [" + p[3] + "]")
+    p[0] = "tokens = [" + str(p[3]) + "]\n\n"
 
 def p_Lista_literals(p):
     "Lista : LITERALS '=' STRING"
-    print("literals = [" + p[3] + "]")
+    p[0] = "literals = [" + str(p[3]) + "]\n"
     
 
 def p_Lista_ignore(p):
     "Lista : IGNORE '=' STRING"
-    print("ignore = [" + p[3] + "]")
+    p[0] = "ignore = [" + str(p[3]) + "]\n"
 
 def p_Lista_precedent(p):
     "Lista : PRECEDENT '=' STRING"
-    print("precedent = [" + p[3] + "]")
+    p[0] = "precedent = [" + str(p[3]) + "]\n\n"
+
+def p_Lista_ts(p):
+    "Lista : DIC '=' STRING CLOSEDIC" 
+    p[0] = str(p[1][1:]) + " = {" + str(p[3]) + "}\n"
+
+def p_Lista_tsempty(p):
+    "Lista : DIC '=' CLOSEDIC"
+    p[0] = "ts = { }\n"
+
 
 def p_Expregulares_list(p):
     "Expregulares : Expregulares Expregular"
+    p[0] = str(p[1]) + str(p[2])
 
 def p_Expregulares_empty(p):
     "Expregulares : "
+    p[0] = ""
 
 def p_Expregular_exp(p):
     "Expregular : EXPREG CODE"
     string = re.split(r"\(",p[2])
     if string[0] == "return":
         returnArgs = re.split(r"\'",p[2])
-        print("def t_" + returnArgs[1] + "(t):\n\t",end="")
-        print(p[1])
+        p[0] = "def t_" + returnArgs[1] + "(t):\n\t"
+        p[0] = str(p[0]) + p[1] + "\n"
         code = returnArgs[2].split(",")
-        print("\tt.value =" + code[1][:-1])
-        print("\treturn t")
+        p[0] = str(p[0]) + "\tt.value =" + code[1][:-1] + "\n"
+        p[0] = str(p[0]) + "\treturn t\n\n" 
     elif string[0] == "error":
-        print("def t_error(t):")
+        p[0] = "def t_error(t):\n"
         # Separar error(blabla, bla) em "error"" e "blabla, bla)"
         errorCode = p[2].split("(",1)
         # Transformar "blabla, bla)" em ")alb, albalb"
         errorCodeReversed = errorCode[1][::-1]
         # Fazer split pela virgula
         parsedString = str(errorCodeReversed).split(",",1)
-        print("\tprint(" + parsedString[1][::-1] + ")")
-        parsedString = parsedString[0][::-1]
-        print("\t" + parsedString[:-1])
-    print("")
+        p[0] = str(p[0]) + "\tprint(" + parsedString[1][::-1] + ")" + "\n"
+        parsedString = parsedString[0][::-1] + "\n"
+        p[0] = str(p[0]) + "\t" + parsedString[:-2] + "\n\n"
+    p[0] = str(p[0]) + ""
 
 def p_Yacc_list(p):
     "Yacc : YACC Listas Producoes"
-    print("import ply.yacc as yacc")
+    p[0]="import ply.yacc as yacc\n\n"  + str(p[2]) + "\n"+ str(p[3]) + "\n"
 
 def p_Producoes_notempty(p):
     "Producoes : Producoes Producao"
+    p[0] = str(p[1]) + str(p[2])
 
 def p_Producoes_empty(p):
     "Producoes :  "
+    p[0] = ""
 
 def p_Producao(p):
     "Producao : PRODUCAO CODE"
     global pcount
-    print("def p_" + str(pcount) + "(p):\n\t\"" + p[1].rstrip(" ") + "\"\n\t" + p[2][1:])
+    p[0] = "def p_" + str(pcount) + "(p):\n\t\"" +str(p[1].rstrip(" ")) + "\"\n\t" + str(p[2][1:]).strip(" ") + "\n"
     pcount = pcount + 1
-    print("")
+
 
 def p_Codigo_notempty(p):
     "Codigo : STARTOFCODE ListaComandos ENDCODE"
+    p[0] = p[2]
 
 def p_Codigo_empty(p):
     "Codigo : "
+    p[0] = ""
 
 def p_ListaComandos_code(p):
     "ListaComandos : ListaComandos CODE"
-    words = p[2].split(" ")
-    print(p[2],end="")
+    p[0] = str(p[1])  +  str(p[2])
     
 def p_ListaComandos_independentcode(p):
     "ListaComandos : ListaComandos INDEPENDENTCODE"
-    print()
+    p[0] = str(p[1]) +  str(p[2])
     
 def p_ListaComandos_empty(p):
     "ListaComandos : "
+    p[0] = ""
 
 def p_error(p):
     print("Syntax Error: ",p)
@@ -210,12 +254,10 @@ parser.success = True
 
 
 program = sys.stdin.read()
-#parser.parse(program)
-#if parser.success:
-#    print("Programa estruturalmente correto!")
-#else:
-#    print("Programa com erros... Corrija e tente novamente!")
+parser.parse(program)
+if not parser.success:
+    print("Programa com erros... Corrija e tente novamente!")
 
-lexer.input(program)
+""" lexer.input(program)
 for tok in lexer:
-    print(tok)
+    print(tok) """
