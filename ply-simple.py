@@ -2,7 +2,9 @@ import ply.lex as lex
 import ply.yacc as yacc
 import re
 
-pcount = 0
+pcount = {}
+
+
 
 literals = ['=',',']
 
@@ -75,6 +77,7 @@ def t_COMMENT(t):
 
 def t_comment_END(t):
     r'[^\n]+'
+    print("# " + t.value)
     lexer.pop_state()
 
 def t_EXPREG(t):
@@ -151,7 +154,7 @@ def p_Lista_tokens(p):
 
 def p_Lista_literals(p):
     "Lista : LITERALS '=' STRING"
-    p[0] = "literals = [" + str(p[3]) + "]\n"
+    p[0] = "literals = [" + str(p[3][1:-1]) + "]\n"
     
 
 def p_Lista_ignore(p):
@@ -216,9 +219,14 @@ def p_Producoes_empty(p):
 
 def p_Producao(p):
     "Producao : PRODUCAO CODE"
-    global pcount
-    p[0] = "def p_" + str(pcount) + "(p):\n\t\"" +str(p[1].rstrip(" ")) + "\"\n\t" + str(p[2][1:]).strip(" ") + "\n"
-    pcount = pcount + 1
+    #global pcount
+    nomeproducao = str(p[1].rstrip(" ")).split(" ",1)
+    if nomeproducao[0] in pcount:
+        pcount[nomeproducao[0]] = pcount[nomeproducao[0]] + 1
+        p[0] = "def p_" + str(nomeproducao[0]) + "_" + str(pcount[nomeproducao[0]]) + "(p):\n\t\"" +str(p[1].rstrip(" ")) + "\"\n\t" + str(p[2][1:]).strip(" ") + "\n"
+    else:
+        pcount[nomeproducao[0]] = 0
+        p[0] = "def p_" + str(nomeproducao[0]) + "_" + str(pcount[nomeproducao[0]]) + "(p):\n\t\"" +str(p[1].rstrip(" ")) + "\"\n\t" + str(p[2][1:]).strip(" ") + "\n"
 
 
 def p_Codigo_notempty(p):

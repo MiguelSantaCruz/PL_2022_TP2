@@ -1,6 +1,9 @@
+# a single char
+# a expressão regular tem de ser r'expreg'
+# symboltable : dictionary of variables
 import ply.lex as lex
 
-literals = ["+-/*=()"]
+literals = ['+','-','/','*','=','(',')']
 ignore = [" \t\n"]
 tokens = ['VAR','NUMBER' ]
 
@@ -27,34 +30,34 @@ precedent = [('left','+','-'),
 
 ts = { }
 
-def p_0(p):
-	"stap : VAR '=' exp"
+def p_stat_0(p):
+	"stat : VAR '=' exp"
 	ts[p[1]] = p[3]
-def p_1(p):
-	"stap : exp"
+def p_stat_1(p):
+	"stat : exp"
 	print(p[1])
-def p_2(p):
+def p_exp_0(p):
 	"exp : exp '+' exp"
 	p[0] = p[1] + p[3]
-def p_3(p):
+def p_exp_1(p):
 	"exp : exp '-' exp"
 	p[0] = p[1] - p[3]
-def p_4(p):
+def p_exp_2(p):
 	"exp : exp '*' exp"
 	p[0] = p[1] * p[3]
-def p_5(p):
+def p_exp_3(p):
 	"exp : exp '/' exp"
 	p[0] = p[1] / p[3]
-def p_6(p):
+def p_exp_4(p):
 	"exp : '-' exp"
 	p[0] = -p[2]
-def p_7(p):
+def p_exp_5(p):
 	"exp : '(' exp ')'"
 	p[0] = p[2]
-def p_8(p):
+def p_exp_6(p):
 	"exp : NUMBER"
 	p[0] = p[1]
-def p_9(p):
+def p_exp_7(p):
 	"exp : VAR"
 	p[0] = getval(p[1])
 
@@ -64,6 +67,7 @@ def p_error(t):
 def getval(n):
     if n not in ts: print(f"Undefined name '{n}'")
     return ts.get(n,0)
-y=yacc()
+lexer = lex.lex()
+y=yacc.yacc()
 y.parse("3+4*7")
 

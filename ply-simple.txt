@@ -1,5 +1,5 @@
 %% LEX  
-%literals = "+-/*=()" ## a single char
+%literals = "'+','-','/','*','=','(',')'" ## a single char
 %ignore = " \t\n"
 %tokens = [ 'VAR','NUMBER' ]
 
@@ -22,8 +22,8 @@ r'.'                           error(f"Illegal character '{t.value[0]}', [{t.lex
 ## symboltable : dictionary of variables
 &ts = { }
 
-stap : VAR '=' exp { ts[p[1]] = p[3] }
-stap : exp { print(p[1]) }
+stat : VAR '=' exp { ts[p[1]] = p[3] }
+stat : exp { print(p[1]) }
 exp : exp '+' exp { p[0] = p[1] + p[3] }
 exp : exp '-' exp { p[0] = p[1] - p[3] }
 exp : exp '*' exp { p[0] = p[1] * p[3] }
@@ -43,12 +43,9 @@ def getval(n):
     if n not in ts: print(f"Undefined name '{n}'")
     return ts.get(n,0)
 
-y=yacc()
+lexer = lex.lex()
+
+y=yacc.yacc()
 y.parse("3+4*7")
 
-def function(n,b):
-    if a: b 
-    else: c
-    print("Hello world")
-    
 /$$
