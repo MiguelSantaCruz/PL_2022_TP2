@@ -1,33 +1,35 @@
-Ply → Lex Yacc Codigo
-    
+Ply → Lex  Yacc  Codigo 
+
 Lex → LEX Listas ExpRegulares
     
-Listas → Listas Lista
+Listas → Listas Lista                
        | ε
       
 Lista → TOKENS '=' STRING
        | LITERALS '=' STRING
        | IGNORE '=' STRING
        | PRECEDENT '=' STRING                
-       | DIC '=' STRING                      
+       | DIC '=' STRING
+       | COMMENT
        | ε
 
 ExpRegulares → ExpRegulares ExpRegular
              | ε
 
 ExpRegular → EXPREG CODE
-
+            | COMMENT
+ 
 Yacc → YACC Listas Producoes
 
 Producoes → Producoes Producao
           | ε
 
 Producao → PRODUCAO CODE  
+         | COMMENT
 
 
 Codigo → STARTOFCODE ListaComandos ENDOFCODE
         | ε
 
-ListaComandos → ListaComandos CODE
-              |  ListaComandos INDEPENDENTCODE
+ListaComandos → ListaComandos INDEPENDENTCODE
               |  ε 

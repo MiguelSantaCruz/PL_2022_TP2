@@ -75,10 +75,10 @@ def t_COMMENT(t):
     r'\#\#'
     lexer.push_state('comment')
 
-def t_comment_END(t):
+def t_comment_COMMENT(t):
     r'[^\n]+'
-    print("# " + t.value)
     lexer.pop_state()
+    return t
 
 def t_EXPREG(t):
     r'r\'[^\']*\''
@@ -156,7 +156,6 @@ def p_Lista_literals(p):
     "Lista : LITERALS '=' STRING"
     p[0] = "literals = [" + str(p[3][1:-1]) + "]\n"
     
-
 def p_Lista_ignore(p):
     "Lista : IGNORE '=' STRING"
     p[0] = "ignore = [" + str(p[3]) + "]\n"
@@ -173,6 +172,9 @@ def p_Lista_tsempty(p):
     "Lista : DIC '=' CLOSEDIC"
     p[0] = "ts = { }\n"
 
+def p_Lista_comment(p):
+    "Lista : COMMENT"
+    p[0] =  "# " + p[1] + "\n"
 
 def p_Expregulares_list(p):
     "Expregulares : Expregulares Expregular"
@@ -194,16 +196,19 @@ def p_Expregular_exp(p):
         p[0] = str(p[0]) + "\treturn t\n\n" 
     elif string[0] == "error":
         p[0] = "def t_error(t):\n"
-        # Separar error(blabla, bla) em "error"" e "blabla, bla)"
-        errorCode = p[2].split("(",1)
-        # Transformar "blabla, bla)" em ")alb, albalb"
-        errorCodeReversed = errorCode[1][::-1]
-        # Fazer split pela virgula
-        parsedString = str(errorCodeReversed).split(",",1)
-        p[0] = str(p[0]) + "\tprint(" + parsedString[1][::-1] + ")" + "\n"
-        parsedString = parsedString[0][::-1] + "\n"
-        p[0] = str(p[0]) + "\t" + parsedString[:-2] + "\n\n"
-    p[0] = str(p[0]) + ""
+        strPrint = p[2].split("\"")
+        p[0] = str(p[0]) + "\tprint(f\"" + strPrint[1] + "\")"
+        code = strPrint[2].split(",")
+        for i in code:
+            if i.endswith("))"):
+                p[0] = str(p[0]) + "\t" + i[:-1].strip() + "\n"
+            else:
+                p[0] = str(p[0]) + "\t" + i.strip() + "\n"
+    p[0] = str(p[0]) + "\n"
+
+def p_Expregular_comment(p):
+    "Expregular : COMMENT"
+    p[0] =  "# " + p[1] + "\n"
 
 def p_Yacc_list(p):
     "Yacc : YACC Listas Producoes"
@@ -228,6 +233,9 @@ def p_Producao(p):
         pcount[nomeproducao[0]] = 0
         p[0] = "def p_" + str(nomeproducao[0]) + "_" + str(pcount[nomeproducao[0]]) + "(p):\n\t\"" +str(p[1].rstrip(" ")) + "\"\n\t" + str(p[2][1:]).strip(" ") + "\n"
 
+def p_Producao_comment(p):
+    "Producao : COMMENT"
+    p[0] =  "# " + p[1] + "\n"
 
 def p_Codigo_notempty(p):
     "Codigo : STARTOFCODE ListaComandos ENDCODE"
@@ -236,10 +244,6 @@ def p_Codigo_notempty(p):
 def p_Codigo_empty(p):
     "Codigo : "
     p[0] = ""
-
-def p_ListaComandos_code(p):
-    "ListaComandos : ListaComandos CODE"
-    p[0] = str(p[1])  +  str(p[2])
     
 def p_ListaComandos_independentcode(p):
     "ListaComandos : ListaComandos INDEPENDENTCODE"

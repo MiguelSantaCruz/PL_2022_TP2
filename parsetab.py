@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "CLOSEDIC CLOSELIST CODE COMMENT DIC ENDCODE EXPREG IGNORE INDEPENDENTCODE LEX LITERALS PRECEDENT PRODUCAO STARTOFCODE STRING TOKENS YACCPly : Lex Yacc CodigoLex : LEX Listas ExpregularesListas : Listas ListaListas : Lista : TOKENS '=' STRINGLista : LITERALS '=' STRINGLista : IGNORE '=' STRINGLista : PRECEDENT '=' STRINGLista : DIC '=' STRING CLOSEDICLista : DIC '=' CLOSEDICExpregulares : Expregulares ExpregularExpregulares : Expregular : EXPREG CODEYacc : YACC Listas ProducoesProducoes : Producoes ProducaoProducoes :  Producao : PRODUCAO CODECodigo : STARTOFCODE ListaComandos ENDCODECodigo : ListaComandos : ListaComandos CODEListaComandos : ListaComandos INDEPENDENTCODEListaComandos : "
+_lr_signature = "CLOSEDIC CLOSELIST CODE COMMENT DIC ENDCODE EXPREG IGNORE INDEPENDENTCODE LEX LITERALS PRECEDENT PRODUCAO STARTOFCODE STRING TOKENS YACCPly : Lex Yacc CodigoLex : LEX Listas ExpregularesListas : Listas ListaListas : Lista : TOKENS '=' STRINGLista : LITERALS '=' STRINGLista : IGNORE '=' STRINGLista : PRECEDENT '=' STRINGLista : DIC '=' STRING CLOSEDICLista : DIC '=' CLOSEDICLista : COMMENTExpregulares : Expregulares ExpregularExpregulares : Expregular : EXPREG CODEExpregular : COMMENTYacc : YACC Listas ProducoesProducoes : Producoes ProducaoProducoes :  Producao : PRODUCAO CODEProducao : COMMENTCodigo : STARTOFCODE ListaComandos ENDCODECodigo : ListaComandos : ListaComandos INDEPENDENTCODEListaComandos : "
     
-_lr_action_items = {'LEX':([0,],[3,]),'$end':([1,4,5,7,9,11,18,26,29,32,33,34,35,37,38,39,],[0,-19,-4,-1,-16,-3,-14,-18,-15,-5,-6,-7,-8,-10,-17,-9,]),'YACC':([2,3,6,10,11,19,31,32,33,34,35,37,39,],[5,-4,-12,-2,-3,-11,-13,-5,-6,-7,-8,-10,-9,]),'TOKENS':([3,5,6,9,11,32,33,34,35,37,39,],[-4,-4,12,12,-3,-5,-6,-7,-8,-10,-9,]),'LITERALS':([3,5,6,9,11,32,33,34,35,37,39,],[-4,-4,13,13,-3,-5,-6,-7,-8,-10,-9,]),'IGNORE':([3,5,6,9,11,32,33,34,35,37,39,],[-4,-4,14,14,-3,-5,-6,-7,-8,-10,-9,]),'PRECEDENT':([3,5,6,9,11,32,33,34,35,37,39,],[-4,-4,15,15,-3,-5,-6,-7,-8,-10,-9,]),'DIC':([3,5,6,9,11,32,33,34,35,37,39,],[-4,-4,16,16,-3,-5,-6,-7,-8,-10,-9,]),'EXPREG':([3,6,10,11,19,31,32,33,34,35,37,39,],[-4,-12,20,-3,-11,-13,-5,-6,-7,-8,-10,-9,]),'STARTOFCODE':([4,5,9,11,18,29,32,33,34,35,37,38,39,],[8,-4,-16,-3,-14,-15,-5,-6,-7,-8,-10,-17,-9,]),'PRODUCAO':([5,9,11,18,29,32,33,34,35,37,38,39,],[-4,-16,-3,30,-15,-5,-6,-7,-8,-10,-17,-9,]),'ENDCODE':([8,17,27,28,],[-22,26,-20,-21,]),'CODE':([8,17,20,27,28,30,],[-22,27,31,-20,-21,38,]),'INDEPENDENTCODE':([8,17,27,28,],[-22,28,-20,-21,]),'=':([12,13,14,15,16,],[21,22,23,24,25,]),'STRING':([21,22,23,24,25,],[32,33,34,35,36,]),'CLOSEDIC':([25,36,],[37,39,]),}
+_lr_action_items = {'LEX':([0,],[3,]),'$end':([1,4,5,7,9,11,17,19,28,30,32,34,35,36,37,39,40,41,],[0,-22,-4,-1,-18,-3,-11,-16,-21,-17,-20,-5,-6,-7,-8,-10,-19,-9,]),'YACC':([2,3,6,10,11,17,20,22,33,34,35,36,37,39,41,],[5,-4,-13,-2,-3,-11,-12,-15,-14,-5,-6,-7,-8,-10,-9,]),'TOKENS':([3,5,6,9,11,17,34,35,36,37,39,41,],[-4,-4,12,12,-3,-11,-5,-6,-7,-8,-10,-9,]),'LITERALS':([3,5,6,9,11,17,34,35,36,37,39,41,],[-4,-4,13,13,-3,-11,-5,-6,-7,-8,-10,-9,]),'IGNORE':([3,5,6,9,11,17,34,35,36,37,39,41,],[-4,-4,14,14,-3,-11,-5,-6,-7,-8,-10,-9,]),'PRECEDENT':([3,5,6,9,11,17,34,35,36,37,39,41,],[-4,-4,15,15,-3,-11,-5,-6,-7,-8,-10,-9,]),'DIC':([3,5,6,9,11,17,34,35,36,37,39,41,],[-4,-4,16,16,-3,-11,-5,-6,-7,-8,-10,-9,]),'COMMENT':([3,5,6,9,10,11,17,19,20,22,30,32,33,34,35,36,37,39,40,41,],[-4,-4,17,17,22,-3,-11,32,-12,-15,-17,-20,-14,-5,-6,-7,-8,-10,-19,-9,]),'EXPREG':([3,6,10,11,17,20,22,33,34,35,36,37,39,41,],[-4,-13,21,-3,-11,-12,-15,-14,-5,-6,-7,-8,-10,-9,]),'STARTOFCODE':([4,5,9,11,17,19,30,32,34,35,36,37,39,40,41,],[8,-4,-18,-3,-11,-16,-17,-20,-5,-6,-7,-8,-10,-19,-9,]),'PRODUCAO':([5,9,11,17,19,30,32,34,35,36,37,39,40,41,],[-4,-18,-3,-11,31,-17,-20,-5,-6,-7,-8,-10,-19,-9,]),'ENDCODE':([8,18,29,],[-24,28,-23,]),'INDEPENDENTCODE':([8,18,29,],[-24,29,-23,]),'=':([12,13,14,15,16,],[23,24,25,26,27,]),'CODE':([21,31,],[33,40,]),'STRING':([23,24,25,26,27,],[34,35,36,37,38,]),'CLOSEDIC':([27,38,],[39,41,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'Ply':([0,],[1,]),'Lex':([0,],[2,]),'Yacc':([2,],[4,]),'Listas':([3,5,],[6,9,]),'Codigo':([4,],[7,]),'Expregulares':([6,],[10,]),'Lista':([6,9,],[11,11,]),'ListaComandos':([8,],[17,]),'Producoes':([9,],[18,]),'Expregular':([10,],[19,]),'Producao':([18,],[29,]),}
+_lr_goto_items = {'Ply':([0,],[1,]),'Lex':([0,],[2,]),'Yacc':([2,],[4,]),'Listas':([3,5,],[6,9,]),'Codigo':([4,],[7,]),'Expregulares':([6,],[10,]),'Lista':([6,9,],[11,11,]),'ListaComandos':([8,],[18,]),'Producoes':([9,],[19,]),'Expregular':([10,],[20,]),'Producao':([19,],[30,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -33,20 +33,22 @@ _lr_productions = [
   ('Listas -> <empty>','Listas',0,'p_Listas_empty','ply-simple.py',148),
   ('Lista -> TOKENS = STRING','Lista',3,'p_Lista_tokens','ply-simple.py',152),
   ('Lista -> LITERALS = STRING','Lista',3,'p_Lista_literals','ply-simple.py',156),
-  ('Lista -> IGNORE = STRING','Lista',3,'p_Lista_ignore','ply-simple.py',161),
-  ('Lista -> PRECEDENT = STRING','Lista',3,'p_Lista_precedent','ply-simple.py',165),
-  ('Lista -> DIC = STRING CLOSEDIC','Lista',4,'p_Lista_ts','ply-simple.py',169),
-  ('Lista -> DIC = CLOSEDIC','Lista',3,'p_Lista_tsempty','ply-simple.py',173),
-  ('Expregulares -> Expregulares Expregular','Expregulares',2,'p_Expregulares_list','ply-simple.py',178),
-  ('Expregulares -> <empty>','Expregulares',0,'p_Expregulares_empty','ply-simple.py',182),
-  ('Expregular -> EXPREG CODE','Expregular',2,'p_Expregular_exp','ply-simple.py',186),
-  ('Yacc -> YACC Listas Producoes','Yacc',3,'p_Yacc_list','ply-simple.py',209),
-  ('Producoes -> Producoes Producao','Producoes',2,'p_Producoes_notempty','ply-simple.py',213),
-  ('Producoes -> <empty>','Producoes',0,'p_Producoes_empty','ply-simple.py',217),
-  ('Producao -> PRODUCAO CODE','Producao',2,'p_Producao','ply-simple.py',221),
-  ('Codigo -> STARTOFCODE ListaComandos ENDCODE','Codigo',3,'p_Codigo_notempty','ply-simple.py',233),
-  ('Codigo -> <empty>','Codigo',0,'p_Codigo_empty','ply-simple.py',237),
-  ('ListaComandos -> ListaComandos CODE','ListaComandos',2,'p_ListaComandos_code','ply-simple.py',241),
-  ('ListaComandos -> ListaComandos INDEPENDENTCODE','ListaComandos',2,'p_ListaComandos_independentcode','ply-simple.py',245),
-  ('ListaComandos -> <empty>','ListaComandos',0,'p_ListaComandos_empty','ply-simple.py',249),
+  ('Lista -> IGNORE = STRING','Lista',3,'p_Lista_ignore','ply-simple.py',160),
+  ('Lista -> PRECEDENT = STRING','Lista',3,'p_Lista_precedent','ply-simple.py',164),
+  ('Lista -> DIC = STRING CLOSEDIC','Lista',4,'p_Lista_ts','ply-simple.py',168),
+  ('Lista -> DIC = CLOSEDIC','Lista',3,'p_Lista_tsempty','ply-simple.py',172),
+  ('Lista -> COMMENT','Lista',1,'p_Lista_comment','ply-simple.py',176),
+  ('Expregulares -> Expregulares Expregular','Expregulares',2,'p_Expregulares_list','ply-simple.py',180),
+  ('Expregulares -> <empty>','Expregulares',0,'p_Expregulares_empty','ply-simple.py',184),
+  ('Expregular -> EXPREG CODE','Expregular',2,'p_Expregular_exp','ply-simple.py',188),
+  ('Expregular -> COMMENT','Expregular',1,'p_Expregular_comment','ply-simple.py',210),
+  ('Yacc -> YACC Listas Producoes','Yacc',3,'p_Yacc_list','ply-simple.py',214),
+  ('Producoes -> Producoes Producao','Producoes',2,'p_Producoes_notempty','ply-simple.py',218),
+  ('Producoes -> <empty>','Producoes',0,'p_Producoes_empty','ply-simple.py',222),
+  ('Producao -> PRODUCAO CODE','Producao',2,'p_Producao','ply-simple.py',226),
+  ('Producao -> COMMENT','Producao',1,'p_Producao_comment','ply-simple.py',237),
+  ('Codigo -> STARTOFCODE ListaComandos ENDCODE','Codigo',3,'p_Codigo_notempty','ply-simple.py',241),
+  ('Codigo -> <empty>','Codigo',0,'p_Codigo_empty','ply-simple.py',245),
+  ('ListaComandos -> ListaComandos INDEPENDENTCODE','ListaComandos',2,'p_ListaComandos_independentcode','ply-simple.py',250),
+  ('ListaComandos -> <empty>','ListaComandos',0,'p_ListaComandos_empty','ply-simple.py',254),
 ]
