@@ -35,9 +35,9 @@ t_ANY_LEX = r'%%\s*LEX'
 t_ANY_LITERALS = r'%literals'
 t_ANY_IGNORE = r'%ignore'
 t_ANY_TOKENS = r'%tokens'
-t_YACC = r'%%\s*YACC'
-t_PRECEDENT = r'%precedence'
-t_DIC = r'\&[a-zA-Z_]+'
+t_ANY_YACC = r'%%\s*YACC'
+t_ANY_PRECEDENT = r'%precedence'
+t_ANY_DIC = r'\&[a-zA-Z_]+'
 
 def t_STARTOFCODE(t):
     r'\$\$'
