@@ -54,7 +54,7 @@ def t_list_STRING(t):
     r'[^\]]+'
     return t
 
-def t_list_CLOSE(t):
+def t_list_CLOSELIST(t):
     r'\]'
     lexer.pop_state()
 
