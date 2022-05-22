@@ -45,8 +45,6 @@ def t_STARTOFCODE(t):
     lexer.push_state('code')
     return t
 
-
-
 def t_openlist(t):
     r'\['
     lexer.push_state('list')
@@ -261,16 +259,11 @@ def p_error(p):
 parser = yacc.yacc()
 
 lexer = lex.lex()
-# Read line from input and parse it
+
 import sys
 parser.success = True
-
 
 program = sys.stdin.read()
 parser.parse(program)
 if not parser.success:
     print("Programa com erros... Corrija e tente novamente!")
-
-""" lexer.input(program)
-for tok in lexer:
-    print(tok) """
