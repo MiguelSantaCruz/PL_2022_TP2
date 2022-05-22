@@ -39,6 +39,7 @@ t_ANY_YACC = r'%%\s*YACC'
 t_ANY_PRECEDENT = r'%precedence'
 t_ANY_DIC = r'\&[a-zA-Z_]+'
 
+
 def t_STARTOFCODE(t):
     r'\$\$'
     lexer.push_state('code')
